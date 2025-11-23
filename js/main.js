@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     current = 0;
     document.getElementById("finalScore").textContent = "";
     document.getElementById("resultsPanel").style.display = "none";
+    document.getElementById("quizCard").style.display = "block";
     renderQuestion(current);
   });
 
@@ -232,6 +233,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   function gradeAll() {
+    // display none quiztion panels
+    document.getElementById("quizCard").style.display = "none";
     graded = true;
     QUESTIONS.forEach((q) => {
       if (!Array.isArray(q.userAnswer)) q.userAnswer = [];
