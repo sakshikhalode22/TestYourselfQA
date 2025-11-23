@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>GitHub Copilot — Enterprise Quiz</title>
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- external stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- ...inside <head> ... -->
+    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=">
+    
+
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="left">
+                <div class="logo">GC</div>
+                <div>
+                    <h1>GitHub Copilot — Enterprise Quiz</h1>
+                    <div class="subtitle">Paginated · Auto-grading · Enterprise theme</div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card" style="padding:10px 14px;display:flex;gap:12px;align-items:center">
+                    <div style="min-width:210px">
+                        <div class="small">Progress</div>
+                        <div class="progress" aria-hidden="true">
+                            <div class="bar" id="progBar"></div>
+                        </div>
+                    </div>
+                    <div class="meta">Question <strong id="qIndex">1</strong> / <strong id="qTotal">1</strong></div>
+                </div>
+            </div>
+        </header>
+
+        <main class="card" id="quizCard" role="main" aria-live="polite">
+            <div class="qtext" id="qText">Loading question...</div>
+            <form id="optionsForm" class="options" autocomplete="off"></form>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="controls">
+                <div style="display:flex;gap:8px;align-items:center">
+                    <button id="btnPrev" class="btn ghost">← Previous</button>
+                    <button id="btnNext" class="btn ghost">Next →</button>
+                    <button id="btnShow" class="btn secondary">Show Answer</button>
+                </div>
+
+                <div style="display:flex;gap:8px;align-items:center">
+                    <button id="btnCheck" class="btn">Check Answers</button>
+                    <div class="small">Tip: Use <strong>Enter</strong> to move forward after answering</div>
+                </div>
+            </div>
+
+            <div class="small" id="answerLine" style="margin-top:12px;color:var(--muted)"></div>
+        </main>
+
+        <!-- results panel shown after grading -->
+        <div id="resultsPanel" class="card" aria-live="polite" style="display:none">
+            <h3 style="margin-top:0">Results</h3>
+            <div id="resultsSummary"></div>
+        </div>
+
+        <footer>
+            <div class="small">This file contains all questions from your uploaded document.</div>
+            <div style="display:flex;gap:8px;align-items:center">
+                <div class="score" id="finalScore"></div>
+                <button id="btnRestart" class="btn ghost">Restart</button>
+                <a id="downloadBtn" class="btn ghost" href="#" download="copilot-quiz-results.json">Download Results</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- external script -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

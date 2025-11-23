@@ -21,3 +21,7 @@ I decided to bypass the boredom entirely! I conjured a simple, magical webpage t
 The Superpower: ✨ Instant Import & Practice
 
 Your creation's defining feature is its generosity: Anyone can instantly import their own dump of MCQs into your digital playground and immediately start practicing, turning their dreary study PDFs into a personalized, fun, and fast-paced quiz experience!
+
+Run:
+npx http-server -c-1 .  
+# then open http://localhost:8080/copilot.html
