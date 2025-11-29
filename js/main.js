@@ -47,8 +47,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let graded = false;
   QUESTIONS.forEach((q) => (q.userAnswer = []));
 
-  let submitted = false;
-
   // Render helpers
   function escapeHtml(s) {
     if (!s) return "";
@@ -111,6 +109,36 @@ document.addEventListener("DOMContentLoaded", async () => {
       : "";
     if (graded) showPerQuestionFeedback(i);
   }
+
+  // ...existing code...
+  let submitted = false;
+
+  // initial UI: hide Check until explicit submit; 
+  document.getElementById("btnCheck").style.display = "none";
+// ...existing code...
+
+  document.getElementById("btnShow").addEventListener("click", (e) => {
+    e.preventDefault();
+    showAnswerFor(current);
+  });
+  document.getElementById("btnCheck").addEventListener("click", (e) => {
+    e.preventDefault();
+    gradeAll();
+  });
+
+  // Submit button: confirm, then enable checking and adjust UI
+  document.getElementById("btnSubmit").addEventListener("click", (e) => {
+    e.preventDefault();
+    if (!confirm("Are you sure you want to submit the exam?")) return;
+    submitted = true;
+    // enable check answers and show the Show Answer button
+    document.getElementById("btnCheck").style.display = "";
+    document.getElementById("btnShow").style.display = "none";
+    // hide navigation once submitted
+    document.getElementById("btnPrev").style.display = "none";
+    document.getElementById("btnNext").style.display = "none";
+    document.getElementById("btnSubmit").style.display = "none";
+  });
 
   // wire controls
   document.getElementById("btnNext").addEventListener("click", (e) => {
