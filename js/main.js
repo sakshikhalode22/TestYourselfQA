@@ -1,11 +1,39 @@
 // Load questions.json and initialize quiz (no static import to avoid module errors)
 document.addEventListener("DOMContentLoaded", async () => {
   let QUESTIONS = [];
+  // get all questions
+  /*try {
+    const res = await fetch("./data/questions.json");
+    if (!res.ok)
+      throw new Error(`Failed to load questions.json: ${res.status}`);
+    QUESTIONS = await res.json();
+  } catch (err) {
+    console.error(err);
+    document.getElementById("qText").textContent = "Failed to load questions.";
+    return;
+  }*/
+
+  // get a random sample of up to 50 questions
   try {
     const res = await fetch("./data/questions.json");
     if (!res.ok)
       throw new Error(`Failed to load questions.json: ${res.status}`);
     QUESTIONS = await res.json();
+
+    // --- pick a random sample of up to 50 questions ---
+    function shuffleArray(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+    const SAMPLE_SIZE = 50;
+    if (QUESTIONS.length > SAMPLE_SIZE) {
+      QUESTIONS = shuffleArray(QUESTIONS).slice(0, SAMPLE_SIZE);
+    }
+    // ---------------------------------------------------
   } catch (err) {
     console.error(err);
     document.getElementById("qText").textContent = "Failed to load questions.";
@@ -20,7 +48,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   QUESTIONS.forEach((q) => (q.userAnswer = []));
 
   let submitted = false;
-
 
   // Render helpers
   function escapeHtml(s) {
@@ -48,12 +75,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       wrapper.className = "option";
       wrapper.htmlFor = id;
       wrapper.innerHTML = `
-  <input type="${type}" name="opt" id="${id}" value="${idx}" ${q.userAnswer.includes(idx) ? "checked" : ""
-        } />
+  <input type="${type}" name="opt" id="${id}" value="${idx}" ${
+        q.userAnswer.includes(idx) ? "checked" : ""
+      } />
   <div>
     <div class="opt-title">${String.fromCharCode(65 + idx)}. ${escapeHtml(
-          opt
-        )}</div>
+        opt
+      )}</div>
   </div>
 `;
       form.appendChild(wrapper);
@@ -158,11 +186,13 @@ document.addEventListener("DOMContentLoaded", async () => {
       ? q.userAnswer.map((x) => String.fromCharCode(65 + x)).join(", ")
       : "No answer";
     // only show answer text; do not mark options
-    document.getElementById("answerLine").textContent = `Answer: ${ansLetters} · Your answer: ${ua}`;
+    document.getElementById(
+      "answerLine"
+    ).textContent = `Answer: ${ansLetters} · Your answer: ${ua}`;
     const ok = arraysEq(q.answers, q.userAnswer);
     document.getElementById("feedback").textContent = ok
       ? "Correct ✅"
-    : "Incorrect ❌";
+      : "Incorrect ❌";
   }
 
   function showPerQuestionFeedback(i) {
@@ -214,8 +244,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         ua
       )}</div>
                   </div>
-                  <div style="margin-left:12px; font-weight:700; color:${ok ? "var(--success)" : "var(--danger)"
-        }">${ok ? "Correct" : "Incorrect"}</div>
+                  <div style="margin-left:12px; font-weight:700; color:${
+                    ok ? "var(--success)" : "var(--danger)"
+                  }">${ok ? "Correct" : "Incorrect"}</div>
                 </div>
             `;
       container.appendChild(row);

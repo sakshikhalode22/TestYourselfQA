@@ -1467,17 +1467,5 @@
             0,
             1
         ]
-    },
-    {
-        "id": 103,
-        "text": "(End of provided content) — confirm there are no further questions",
-        "type": "single",
-        "options": [
-            "There are more questions to add",
-            "This is the full set; no more questions"
-        ],
-        "answers": [
-            1
-        ]
     }
 ]
